@@ -1,0 +1,8 @@
+{
+  "name": "scrapbook-workers",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "tsx workers/index.ts"
+  }
+}

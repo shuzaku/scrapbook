@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0f;
+  --foreground: #ffffff;
 }
 
 @theme inline {
@@ -12,15 +12,42 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
+/* Page turns in the scrapbook reader. The leaf pivots on its inner edge; the
+   hidden backface means it vanishes at 90°, revealing the page beneath. */
+@keyframes page-turn-out {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(-168deg); }
+}
+
+@keyframes page-turn-in {
+  from { transform: rotateY(-168deg); }
+  to   { transform: rotateY(0deg); }
+}
+
+.page-turn-out,
+.page-turn-in {
+  transform-origin: left center;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.page-turn-out { animation: page-turn-out 520ms ease-in forwards; }
+.page-turn-in  { animation: page-turn-in 520ms ease-out forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .page-turn-out,
+  .page-turn-in { animation-duration: 1ms; }
 }
